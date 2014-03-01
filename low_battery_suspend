@@ -1,0 +1,31 @@
+#!/bin/bash
+
+SUSPEND_CMD="systemctl suspend"
+MIN=$1
+
+usage()
+{
+  cat << EOF
+Usage: $0 [1-100]
+
+  Takes a percentage which is compared against the actual battery percentage.
+  If the actual battery percentage <= provided percentage, then suspend the system.
+EOF
+}
+
+if [ -z $1 ] || [ $1 -lt 1 -o $1 -gt 100 ]
+then
+  usage
+  exit
+fi
+
+ACPI=$(acpi | cut -d ' ' -f 3-4)
+IFS=', '
+set $ACPI
+STATE=$1
+CHARGE=${2%\%}
+
+if [ $STATE == "Discharging" ] && [ $CHARGE -le $MIN ]
+then
+  $SUSPEND_CMD
+fi
