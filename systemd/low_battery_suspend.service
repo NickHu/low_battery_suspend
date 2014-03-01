@@ -1,0 +1,6 @@
+[Unit]
+Description=low_battery_suspend unit to be called by timer
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/low_battery_suspend 5

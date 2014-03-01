@@ -1,0 +1,10 @@
+[Unit]
+Description=Runs low_battery_suspend every minute
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1min
+Unit=low_battery_suspend.service
+
+[Install]
+WantedBy=multi-user.target
